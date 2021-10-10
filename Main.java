@@ -1,80 +1,57 @@
-package dataStructure.List.LinkList;
+package dataStructure.stack;
 
-import genericProgram.Person;
+import java.util.List;
+import java.util.Stack;
 
 /**
  * @Author: 19261
- * @Date: 2021/10/8 10:24
+ * @Date: 2021/10/9 17:25
  */
 public class Main {
-    public static void testAdd() {
-        MyLinkList linkList=new MyLinkList();
-        linkList.addFirst(1);
-        linkList.addFirst(2);
-        linkList.addFirst(3);
-        System.out.println(linkList);
-        linkList.addLast(2);
-        linkList.addLast(3);
-        System.out.println(linkList);
-        linkList.add(1,0);
-        System.out.println(linkList);
-        linkList.add(5,0);
-        System.out.println(linkList);
-        linkList.add(6,5);
-        System.out.println(linkList);
-    }
-    public static void test(){
-        MyLinkList linkList=new MyLinkList();
-        linkList.addFirst(0);
-        linkList.addLast(1);
-        linkList.addLast(2);
-        linkList.addLast(2);
-        linkList.addLast(4);
-        System.out.println(linkList);
-        int index1=linkList.indexOf(2);
-        System.out.println(index1);
-        int index2=linkList.lastIndexOf(2);
-        System.out.println(index2);
-        boolean l=linkList.contains(3);
-        System.out.println(l);
-        boolean b=linkList.contains(0);
-        System.out.println(b);
-        boolean o=linkList.isEmpty();
-        System.out.println(o);
-        linkList.clear();
-        System.out.println(linkList);
+    public static void main(String[] args) {
+        MyStackL myStackL=new MyStackL();
+        myStackL.push(1);
+        myStackL.push(2);
+        myStackL.push(3);
+        System.out.println(myStackL);
+        System.out.println(myStackL.pop());
+        System.out.println(myStackL);
+        System.out.println(myStackL.peek());
+        myStackL.pop();
+        myStackL.pop();
+        System.out.println(myStackL.empty());
     }
 
-    public static void testRemove(){
-        MyLinkList linkList=new MyLinkList();
-        linkList.addFirst(0);
-        linkList.addLast(1);
-        linkList.addLast(2);
-        linkList.addLast(3);
-        linkList.addLast(4);
-        System.out.println(linkList);
-        linkList.removeFirst();
-        System.out.println(linkList);
-        linkList.removeLast();
-        System.out.println(linkList);
-        linkList.removeByIndex(1);
-        System.out.println(linkList);
-        linkList.removeByIndex(linkList.getLength());
-        System.out.println(linkList);
-        linkList.removeByVal(3);
-        System.out.println(linkList);
-        linkList.removeByVal(4);
-        System.out.println(linkList);
-        linkList.removeByVal(0);
-        System.out.println(linkList);
-        linkList.removeByVal(2);
-        System.out.println(linkList);
-        linkList.removeByVal(1);
-        System.out.println(linkList);
+    public static void main2(String[] args) {
+        MyStackA myStackA=new MyStackA();
+        myStackA.push(1);
+        myStackA.push(2);
+        myStackA.push(3);
+        System.out.println(myStackA);
+        System.out.println(myStackA.pop());
+        System.out.println(myStackA);
+        System.out.println(myStackA.peek());
+        System.out.println(myStackA.empty());
     }
-    public static void main(String[] args) {
-        //testAdd();
-        testRemove();
-        //test();
+    public static void main1(String[] args) {
+        //使用多态的形式创建栈，方便之后的修改；
+        //List<Integer> stack1=new Stack<>();
+        Stack<Integer> stack=new Stack<>();
+        stack.push(1);
+        stack.push(2);
+        stack.push(3);
+        stack.push(4);
+        System.out.println(stack);
+        System.out.println(stack.peek());
+        Integer ret1=stack.pop();
+        System.out.println(ret1);
+        System.out.println(stack.pop());
+        System.out.println(stack.pop());
+        System.out.println(stack.pop());
+        System.out.println(stack.empty());
+        System.out.println(stack);
+        Integer ret=stack.peek();
+        System.out.println(ret);
+        System.out.println(stack.empty());
     }
 }
