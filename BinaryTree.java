@@ -1,214 +1,133 @@
-package aaTest.LeetCode;
+package Practice1028;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.Stack;
 
 /**
  * @Author: 19261
- * @Date: 2021/10/13 15:03
+ * @Date: 2021/10/28 14:54
  */
-
-class TreeNode {
-    int val;
-    TreeNode left;
-    TreeNode right;
-
-    TreeNode() {
-    }
-    TreeNode(int val) {
-        this.val = val;
-    }
-}
-
 public class BinaryTree {
-    //二叉树的先序遍历，返回一个线性表（顺序表）
-    public List<Integer> preorderTraversal(TreeNode root) {
-        List<Integer> result=new ArrayList<>();
+    //构造二叉树：
+    public static TreeNode createTree(){
+        TreeNode a=new TreeNode("A");
+        TreeNode b=new TreeNode("B");
+        TreeNode c=new TreeNode("C");
+        TreeNode d=new TreeNode("D");
+        a.left=b;
+        a.right=c;
+        c.left=d;
+        return a;
+    }
+    public static void main(String[] args){
+        TreeNode root=createTree();
+//        preOrderTraversal(root);
+//        System.out.println();
+//        preOrder(root);
+//        System.out.println();
+//        inOrderTraversal(root);
+//        System.out.println();
+//        inOrder(root);
+//        System.out.println();
+        postoOrderTraversal(root);
+        System.out.println();
+        postOrder(root);
+
+    }
+    //先序遍历非递归方法：
+    public static void preOrder(TreeNode root){
         if (root==null){
-            return result;
+            return;
         }
-        result.add(root.val);
-        result.addAll(preorderTraversal(root.left));
-        result.addAll(preorderTraversal(root.right));
-        return result;
-    }
-    //二叉树的中序遍历，返回一个线性表（顺序表）
-    public List<Integer> inorderTraversal(TreeNode root) {
-        List<Integer> result=new ArrayList<>();
-        if (root==null){
-            return result;
-        }
-        result.addAll(inorderTraversal(root.left));
-        result.add(root.val);
-        result.addAll(inorderTraversal(root.right));
-        return result;
-    }
-    //二叉树的后序遍历，并返回一个顺序表
-    public List<Integer> postorderTraversal(TreeNode root) {
-        List<Integer> result=new ArrayList<>();
-        if (root==null){
-            return result;
-        }
-        result.addAll(postorderTraversal(root.left));
-        result.addAll(postorderTraversal(root.right));
-        result.add(root.val);
-        return result;
-    }
-    //判断两个二叉树是否相等
-    public boolean isSameTree(TreeNode p, TreeNode q) {
-        boolean result=false;
-        if (p==null&&q==null){
-            return true;
-        }
-        if(p==null || q==null){
-            return false;
-        }
-        if (p.val != q.val) {
-            return false;
-        }
-        return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
-    }
-    //判断一个二叉树tree是否包含另一个二叉树subRoot(subRoot是否是tree的子树)
-    public boolean isSubtree(TreeNode root, TreeNode subRoot) {
-        if (root==null){
-            return false;
-        }
-        return isSameTree(root,subRoot)||isSubtree(root.left,subRoot)||isSubtree(root.right,subRoot);
-    }
-    //给定一个二叉树，找出其最大深度。
-    public int getHeight(TreeNode root){
-        if(root==null){
-            return 0;
-        }
-        int l=getHeight(root.left);
-        int r=getHeight(root.right);
-        return 1+((l>r)?l:r);
-    }
-    //判断一个二叉树是否是一个平衡二叉树
-    public boolean isBalanced(TreeNode root) {
-        if (root==null){
-            return true;
-        }
-        int l=getHeight(root.left);
-        int r=getHeight(root.right);
-        if (l - r > 1 || l - r < -1) {
-            return false;
-        }
-        return isBalanced(root.left)&&isBalanced(root.right);
-    }
-    //给定一个二叉树，检查它是否是镜像对称的。
-    //先判断一个树是否是镜像关系
-    public boolean isMirror(TreeNode s,TreeNode t){
-        if (s == null && t == null) {
-            return true;
-        }
-        if (s == null || t == null) {
-            return false;
-        }
-        if (s.val!=t.val){
-            return false;
-        }
-        return isMirror(s.left,t.right)&&isMirror(s.right,t.left);
-    }
-    public boolean isSymmetric(TreeNode root) {
-        if(root==null){
-            return true;
-        }
-        return isMirror(root.left,root.right);
-    }
-    //二叉树层序遍历
-    public static void levelOrderTraversal(TreeNode root){
-         if (root==null){
-             return;
-         }
-        Queue<TreeNode> queue=new LinkedList<>();
-         queue.offer(root);
-        while (true) {
-            TreeNode cur=queue.poll();
-            if (cur == null) {
-                break;
-            }
+        Stack<TreeNode> stack=new Stack<>();
+        stack.push(root);
+        while(!stack.empty()){
+            TreeNode cur=stack.pop();
             System.out.print(cur.val);
+            if(cur.right!=null){
+                stack.push(root.right);
+            }
             if (cur.left != null) {
-                queue.offer(cur.left);
-            }
-            if (cur.right != null) {
-                queue.offer(cur.right);
+                stack.push(cur.left);
             }
         }
     }
-    public static TreeNode createTree() {
-        TreeNode a = new TreeNode(1);
-        TreeNode b = new TreeNode(2);
-        TreeNode c = new TreeNode(3);
-        TreeNode d = new TreeNode(4);
-        TreeNode e = new TreeNode(5);
-        TreeNode f = new TreeNode(6);
-        TreeNode g = new TreeNode(7);
-        TreeNode h = new TreeNode(8);
-        TreeNode i = new TreeNode(9);
-        a.left = b;
-        a.right = c;
-        b.left = d;
-        b.right = e;
-        c.right = f;
-        d.left = g;
-        e.left = h;
-        e.right = i;
-        return a;
-    }
-    //判断二叉树是否为完全二叉树
-    public static boolean isCompleteTree(TreeNode root){
+    //先序遍历：
+    public static void preOrderTraversal(TreeNode root){
         if (root == null) {
-            return true;
+            return;
         }
-        Queue<TreeNode> queue=new LinkedList<>();
-        queue.offer(root);
-        boolean level1=true;
-        while (true) {
-            TreeNode cur=queue.poll();
-            if (cur==null){
-                break;
-            }
-            if(level1){
-                if (cur.left != null && cur.right != null) {
-                    queue.offer(cur.left);
-                    queue.offer(cur.right);
-                } else if (cur.left != null && cur.right == null) {
-                    level1=false;
-                } else if (cur.left == null && cur.right != null) {
-                    return false;
-                }
-            }else{
-                if (cur.left != null && cur.right != null) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-    public static TreeNode buildTree() {
-        TreeNode a = new TreeNode(1);
-        TreeNode b = new TreeNode(2);
-        TreeNode c = new TreeNode(3);
-        TreeNode d = new TreeNode(4);
-        TreeNode e = new TreeNode(5);
-        TreeNode f = new TreeNode(6);
-        a.left = b;
-        a.right = c;
-        b.left = d;
-        b.right = e;
-        d.right=f;
-        return a;
+        System.out.print(root.val);
+        preOrderTraversal(root.left);
+        preOrderTraversal(root.right);
     }
 
-    public static void main(String[] args) {
-//        TreeNode root=createTree();
-//        levelOrderTraversal(root);
-        TreeNode root=buildTree();
-        boolean ret=isCompleteTree(root);
-        System.out.println(ret);
+    //中序遍历：
+    public static void inOrderTraversal(TreeNode root) {
+        if (root == null) {
+            return;
+        }
+        inOrderTraversal(root.left);
+        System.out.print(root.val);
+        inOrderTraversal(root.right);
+    }
+    //中序遍历非递归方法：
+    public static void inOrder(TreeNode root){
+        if (root == null) {
+            return;
+        }
+        Stack<TreeNode> stack=new Stack<>();
+        stack.push(root);
+        TreeNode ret=stack.peek();
+        while(!stack.empty()){
+            while (ret.left != null) {
+                stack.push(ret.left);
+                ret=ret.left;
+            }
+            TreeNode cur=stack.pop();
+            System.out.print(cur.val);
+            if (cur.right!=null){
+                stack.push(cur.right);
+                if (cur.right.left!=null){
+                    ret=cur.right;
+                }
+            }
+        }
+    }
+
+    //后序遍历：
+    public static void postoOrderTraversal(TreeNode root) {
+        if (root == null) {
+            return;
+        }
+        postoOrderTraversal(root.left);
+        postoOrderTraversal(root.right);
+        System.out.print(root.val);
+    }
+
+    //后序遍历非递归的方法：
+    public static void postOrder(TreeNode root) {
+        if (root==null){
+            return;
+        }
+        Stack<TreeNode>stack=new Stack<>();
+        TreeNode cur = root;
+        TreeNode prev=null;
+        while (true) {
+            while (cur != null) {
+                stack.push(cur);
+                cur=cur.left;
+            }
+            if(stack.empty()){
+                break;
+            }
+            TreeNode tmp=stack.peek();
+            if (tmp.right==null||tmp.right==prev){
+                System.out.print(tmp.val);
+                stack.pop();
+                prev=tmp;
+            }else{
+                cur=tmp.right;
+            }
+        }
     }
 }
