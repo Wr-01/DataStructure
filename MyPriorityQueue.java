@@ -39,7 +39,7 @@ public class MyPriorityQueue {
     //堆的创建（向下调整）
     public static void createHeap(int[] arr){
         //从第一个非叶子节点比较判断，向下调整
-        for(int i=(arr.length-1-1)/2;i>0;i--){
+        for(int i=(arr.length-1-1)/2;i>=0;i--){
             shiftDown(arr,arr.length-1,i);
         }
     }
