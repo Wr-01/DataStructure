@@ -172,8 +172,70 @@ public class MySort {
         }
     }
 
+    //归并排序：
+    public static void mergeSort(int[] arr) {
+        _mergeSort(arr,0,arr.length);
+    }
+    //辅助递归方法：
+    public static void _mergeSort(int[] arr, int left, int right) {
+        if (right - left <= 1) {
+            return;
+        }
+        //将数组划分等份的两个进行递归排序
+        int mid = (right+left)/2;
+        _mergeSort(arr,left,mid);
+        _mergeSort(arr, mid, right);
+        //进行合并有序数组操作，并将最终有序数组赋值给原数组
+        merge(arr,left,mid,right);
+    }
+    //合并有序数组操作
+    public static void merge(int[] arr, int left, int mid, int right) {
+        //先设置一个空数组，存取合并之后的元素
+        int[] tmp=new int[right-left];
+        int l=left;
+        int r=mid;
+        int size=0;
+        while (l < mid && r < right) {
+            if (arr[l] >= arr[r]) {
+                tmp[size++]=arr[l++];
+            }else{
+                tmp[size++]=arr[r++];
+            }
+        }
+        while (l<mid){
+            tmp[size++]=arr[l++];
+        }
+        while(r<right){
+            tmp[size++]=arr[r++];
+        }
+        //合并完之后将合并的数组赋值给原数组
+        while(size>=0&&right>left){
+            arr[right-1]=tmp[size-1];
+            size--;
+            right--;
+        }
+    }
+
+    //归并排序非递归方法
+    public static void mergeSortLoop(int[] arr) {
+        for (int gap = 1; gap < arr.length; gap *= 2) {
+            for (int i = 0; i < arr.length; i = i + 2 * gap) {
+                int left=i;
+                int mid=i+gap;
+//                if(mid>=arr.length){
+//                    continue;
+//                }
+                int right=i+2*gap;
+                if (right > arr.length) {
+                    right=arr.length;
+                }
+                merge(arr,left,mid,right);
+            }
+        }
+    }
+
     public static void main(String[] args) {
-        int[] arr={7,2,5,9,5,3,4};
+        int[] arr={7,2,5,9,3,4};
         System.out.println(Arrays.toString(arr));
 //        insertSort(arr);
 //        System.out.println(Arrays.toString(arr));
@@ -187,7 +249,9 @@ public class MySort {
 //        System.out.println(Arrays.toString(arr));
 //        quickSort(arr);
 //        System.out.println(Arrays.toString(arr));
-        quickSortByLoop(arr);
+//        quickSortByLoop(arr);
+//        System.out.println(Arrays.toString(arr));
+        mergeSortLoop(arr);
         System.out.println(Arrays.toString(arr));
     }
 }
